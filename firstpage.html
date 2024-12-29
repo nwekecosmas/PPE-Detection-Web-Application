@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Object Detection Web App</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff; /* White background */
+        color: #000000; /* Black text */
+      }
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 20px;
+        background-color: rgba(0, 0, 0, 0.1); /* Light gray background */
+      }
+      .container {
+        text-align: center;
+        padding: 5px 20px;
+      }
+      p {
+        margin-bottom: 0px;
+        color: #333333; /* Dark gray for headings */
+      }
+      span {
+        font-size: 12px;
+      }
+      .header {
+        font-weight: 900;
+        color: black;
+      }
+      .screens {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 0px;
+      }
+      .screen {
+        width: 45%;
+        background-color: rgba(
+          240,
+          240,
+          240,
+          0.8
+        ); /* Light gray for containers */
+        padding: 5px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      footer {
+        margin-top: 20px;
+        font-size: 14px;
+        text-align: center;
+        color: #333333; /* Dark gray for footer text */
+      }
+      input[type="file"] {
+        margin: 2px 0;
+        padding: 10px;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #0000ff; /* Gray button */
+        color: white; /* White button text */
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+      button:hover {
+        background-color: #ff5733; /* Red on hover */
+      }
+      @keyframes glow {
+        0% {
+          width: 7px;
+          height: 7px;
+          box-shadow: 0 0 5px rgba(255, 0, 0, 0.2);
+        }
+        100% {
+          width: 10px;
+          height: 10px;
+          box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+        }
+      }
+      .live-button {
+        position: relative;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        border: 2px solid red;
+      }
+
+      .live-button:hover {
+        background-color: #ff5733; /*005cbf*/
+      }
+
+      .live-badge {
+        position: absolute;
+        display: inline-block;
+        right: 5px;
+        top: 3px;
+        background-color: red;
+        border-radius: 50%;
+        animation: glow 1s infinite alternate;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div>
+        <p class="header">Workplace Safety Intelligent PPE Detection System</p>
+        <span>PERSONAL PROTECTIVE EQUIPMENT: Upload files to start detection or watch the live stream.</span>
+      </div>
+      <div>
+        <a href="/">
+          <button type="submit">Home</button>
+        </a>
+        <a href="/video_feed">
+          <button type="submit" class="live-button">
+            Live Stream
+            <span class="live-badge"></span>
+          </button>
+        </a>
+      </div>
+    </nav>
+
+    <div class="container">
+      <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".jpg,.jpeg,.png,.mp4" required />
+        <button type="submit">Upload & Detect</button>
+      </form>
+
+      <div class="screens">
+        <div class="screen" id="uploaded-screen">
+          <h2>Uploaded Image/Video</h2>
+          {% if uploaded_image_path %}
+          <img
+            src="{{ uploaded_image_path }}"
+            alt="Uploaded Image"
+            style="width: 100%; height: 330px"
+          />
+          {% endif %} {% if video_feed %}
+          <video width="100%" controls>
+            <source src="{{ video_path }}" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          {% endif %}
+        </div>
+        <div class="screen" id="detected-screen">
+          <h2>Detected Objects</h2>
+          {% if detected_image_path %}
+          <img
+            src="{{ detected_image_path }}"
+            alt="Detected Image"
+            style="width: 100%; height: 330px"
+          />
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      NATIONAL OPEN UNIVERSITY OF NIGERIA PROJECT - Design & Implementation of
+      Object Detection Web Application by NOU221133356
+    </footer>
+  </body>
+</html>
